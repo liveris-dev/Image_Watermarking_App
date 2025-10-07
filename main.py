@@ -1,5 +1,5 @@
 from tkinter import *
-from tkinter import filedialog
+from tkinter import filedialog, simpledialog
 from PIL import Image, ImageTk, ImageGrab
 
 root = Tk()
@@ -34,6 +34,10 @@ def custom_logo():
     final_image=canvas.create_image(560, 365, image=watermark_logo)
     root.update()
 
+def text_logo():
+    text_to_enter = simpledialog.askstring(title="Text Logo", prompt="Please type the text to enter as a logo.")
+    final_image = canvas.create_text(500,360, fill="red", font="Arial 11 italic bold", text=text_to_enter)
+    root.update()
 
 #UPLOAD A PHOTO
 def open_explorer():
@@ -88,6 +92,10 @@ watermark_button.grid(row=1, column=1, pady=10, padx=20)
 custom_watermark_button = Button(root,text="Custom Watermark",command=custom_logo)
 custom_watermark_button.config(font=("Arial", 11))
 custom_watermark_button.grid(row=1, column=2, pady=10, padx=20)
+
+text_button = Button(root,text="Custom Text Watermark", command=text_logo)
+text_button.config(font=("Arial", 11))
+text_button.grid(row=3, column=0, pady=10, padx=20)
 
 save_button = Button(root,text="Save image",command=save_image)
 save_button.config(font=("Arial", 11))
