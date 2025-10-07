@@ -19,7 +19,6 @@ def watermark():
     watermark_image = watermark_image.resize((80, 60))
     watermark_logo = ImageTk.PhotoImage(watermark_image)
     final_image = canvas.create_image(560, 365, image=watermark_logo)
-    print("Yey")
     root.update()
 
 #APPLY CUSTOM WATERMARK LOGO
@@ -33,7 +32,6 @@ def custom_logo():
     logo_image = logo_image.resize((100,100))
     watermark_logo = ImageTk.PhotoImage(logo_image)
     final_image=canvas.create_image(560, 365, image=watermark_logo)
-    print("Aoua")
     root.update()
 
 
@@ -74,20 +72,25 @@ image_on_canvas = canvas.create_image(300,200, image=photo)
 canvas.image = photo
 
 #CREATE LABEL
-label = Label(root, text="Put a custom Watermark on your photo!", height=3)
+label = Label(root, text="Put a custom Watermark on your photo!", height=3, bg="#E8E8E8")
+label.config(font = ("Arial", 14, "bold"))
 label.grid(row=0, column=0, columnspan=3, pady=10, padx=20)
 
 #CREATE BUTTONS
 upload_button = Button(root,text="Upload a photo",command=open_explorer)
+upload_button.config(font=("Arial", 11))
 upload_button.grid(row=1, column=0, pady=10, padx=20)
 
-watermark_button = Button(root,text="Watermark your image",command=watermark)
+watermark_button = Button(root,text="Default Watermark",command=watermark)
+watermark_button.config(font=("Arial", 11))
 watermark_button.grid(row=1, column=1, pady=10, padx=20)
 
-custom_watermark_button = Button(root,text="Custom Watermark your image",command=custom_logo)
+custom_watermark_button = Button(root,text="Custom Watermark",command=custom_logo)
+custom_watermark_button.config(font=("Arial", 11))
 custom_watermark_button.grid(row=1, column=2, pady=10, padx=20)
 
 save_button = Button(root,text="Save image",command=save_image)
+save_button.config(font=("Arial", 11))
 save_button.grid(row=3, column=2, pady=10, padx=20)
 
 
