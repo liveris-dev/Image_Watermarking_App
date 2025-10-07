@@ -7,23 +7,33 @@ root.title("Watermark")
 root.geometry("700x700")
 root.configure(bg="#E8E8E8")
 
-watermark_image=Image.open("sample_transparent_image.png")
-watermark_image=watermark_image.resize((100,80))
+watermark_image=Image.open("logo-web.png").convert("RGBA")
+watermark_image=watermark_image.resize((80,60))
 watermark_logo = ImageTk.PhotoImage(watermark_image)
 
-#CREATE CANVAS
-canvas = Canvas(root, width=600,height=400)
-canvas.grid(row=2, column=0, columnspan=2, pady=30, padx=50)
 
-photo = ImageTk.PhotoImage(Image.open("sample_transparent_image.png"))
-image_on_canvas = canvas.create_image(300,200, image=photo)
-canvas.image = photo
-
-
-#APPLY THE DEFAULT WATERMARK TO THE PHOTO
+#APPLY THE DEFAULT WATERMARK LOGO
 def watermark():
-    watermarked_image=canvas.create_image(500,320, image=watermark_logo, tag="watermark")
-    print("You pressed the watermark button.")
+    global watermark_logo
+    watermark_image = Image.open("logo-web.png").convert("RGBA")
+    watermark_image = watermark_image.resize((80, 60))
+    watermark_logo = ImageTk.PhotoImage(watermark_image)
+    final_image = canvas.create_image(560, 365, image=watermark_logo)
+    print("Yey")
+    root.update()
+
+#APPLY CUSTOM WATERMARK LOGO
+def custom_logo():
+    global  watermark_logo
+    filepath = filedialog.askopenfilename(initialdir="/",
+                                           title="Select Image",
+                                           filetypes=[("Image File", '.jpg .png .jpeg')]
+                                           )
+    logo_image=Image.open(filepath)
+    logo_image = logo_image.resize((100,100))
+    watermark_logo = ImageTk.PhotoImage(logo_image)
+    final_image=canvas.create_image(560, 365, image=watermark_logo)
+    print("Aoua")
     root.update()
 
 
@@ -33,9 +43,7 @@ def open_explorer():
                                            title="Select Image",
                                            filetypes=[("Image File", '.jpg .png .jpeg')]
                                            )
-    print("You pressed the upload button")
     canvas.delete(image_on_canvas)
-
     img2 = Image.open(filename)
     img2=img2.resize((600,400))
     background = ImageTk.PhotoImage(img2)
@@ -56,9 +64,18 @@ def save_image():
     img.save(filelocation)
 
 
+
+#CREATE CANVAS
+canvas = Canvas(root, width=600,height=400)
+canvas.grid(row=2, column=0, columnspan=3, pady=30, padx=50)
+
+photo = ImageTk.PhotoImage(Image.open("sample_transparent_image.png").convert("RGBA"))
+image_on_canvas = canvas.create_image(300,200, image=photo)
+canvas.image = photo
+
 #CREATE LABEL
 label = Label(root, text="Put a custom Watermark on your photo!", height=3)
-label.grid(row=0, column=0, columnspan=2, pady=10, padx=20)
+label.grid(row=0, column=0, columnspan=3, pady=10, padx=20)
 
 #CREATE BUTTONS
 upload_button = Button(root,text="Upload a photo",command=open_explorer)
@@ -67,8 +84,11 @@ upload_button.grid(row=1, column=0, pady=10, padx=20)
 watermark_button = Button(root,text="Watermark your image",command=watermark)
 watermark_button.grid(row=1, column=1, pady=10, padx=20)
 
+custom_watermark_button = Button(root,text="Custom Watermark your image",command=custom_logo)
+custom_watermark_button.grid(row=1, column=2, pady=10, padx=20)
+
 save_button = Button(root,text="Save image",command=save_image)
-save_button.grid(row=3, column=1, pady=10, padx=20)
+save_button.grid(row=3, column=2, pady=10, padx=20)
 
 
 root.mainloop()
