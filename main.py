@@ -1,5 +1,5 @@
 from tkinter import *
-from tkinter import filedialog, simpledialog
+from tkinter import filedialog, simpledialog, messagebox
 from PIL import Image, ImageTk, ImageGrab
 
 
@@ -87,6 +87,8 @@ class WatermarkingApp:
         img=ImageGrab.grab(bbox=(x,y,x1,y1))
         img.show()
         img.save(filelocation)
+        messagebox.showinfo("Success", "Image saved.")
+
 
 if __name__ == "__main__":
     root = Tk()
